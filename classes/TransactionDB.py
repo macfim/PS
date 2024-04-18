@@ -29,6 +29,16 @@ class TransactionDB:
 
         return result
     
+    def find_all_by_user_id(self, user_id):
+        sql = "SELECT * FROM transactions WHERE user_id = %s"
+        val = (user_id,)
+
+        cursor = self.db.cursor()
+        cursor.execute(sql, val)
+        result = cursor.fetchall()
+
+        return result
+    
     def find_by_id(self, id):
         sql = "SELECT * FROM transactions WHERE id = %s"
         val = (id,)
