@@ -38,6 +38,16 @@ class UserDB:
         result = cursor.fetchall()
 
         return result
+    
+    def find_by_email_and_password(self, email, password):
+        sql = "SELECT * FROM users WHERE email = %s AND password = %s"
+        val = (email, password)
+
+        cursor = self.db.cursor()
+        cursor.execute(sql, val)
+        result = cursor.fetchone()
+
+        return result
 
     def create(self, email, first_name, last_name, password):
         sql = "INSERT INTO users (email, first_name, last_name, password) VALUES (%s, %s, %s, %s)"
