@@ -63,22 +63,44 @@ class App:
 
     def display_transactions(self):
         transactions = self.transactiondb.find_all_by_user_id(self.user_id)
-        
+
+        self.total = 0
+        for transaction in transactions:
+            if transaction[2] == "Income":
+                self.total += int(transaction[3])
+            else:
+                self.total -= int(transaction[3])
+
+        self.total_label = Label(self.main_frame, text="Total: " + str(self.total))
+        self.total_label.grid(row=0, column=0, columnspan=5)
+
+        self.id_label = Label(self.main_frame, text="ID")
+        self.id_label.grid(row=1, column=0)
+
+        self.type_label = Label(self.main_frame, text="Type")
+        self.type_label.grid(row=1, column=1)
+
+        self.amount_label = Label(self.main_frame, text="Amount")
+        self.amount_label.grid(row=1, column=2)
+
+        self.date_label = Label(self.main_frame, text="Date")
+        self.date_label.grid(row=1, column=3)
+
+        self.description_label = Label(self.main_frame, text="Description")
+        self.description_label.grid(row=1, column=4)
+
         for i in range(len(transactions)):
             self.id = Label(self.main_frame, text=transactions[i][0])
-            self.id.grid(row=i, column=0)
+            self.id.grid(row=i+2, column=0)
 
-            self.type = Label(self.main_frame, text=transactions[i][1])
-            self.type.grid(row=i, column=1)
+            self.type = Label(self.main_frame, text=transactions[i][2])
+            self.type.grid(row=i+2, column=1)
 
-            self.amount = Label(self.main_frame, text=transactions[i][2])
-            self.amount.grid(row=i, column=2)
+            self.amount = Label(self.main_frame, text=transactions[i][3])
+            self.amount.grid(row=i+2, column=2)
 
-            self.date = Label(self.main_frame, text=transactions[i][3])
-            self.date.grid(row=i, column=3)
+            self.date = Label(self.main_frame, text=transactions[i][4])
+            self.date.grid(row=i+2, column=3)
 
-            self.description = Label(self.main_frame, text=transactions[i][4])
-            self.description.grid(row=i, column=4)
-
-            self.user_id = Label(self.main_frame, text=transactions[i][5])
-            self.user_id.grid(row=i, column=5)
+            self.description = Label(self.main_frame, text=transactions[i][5])
+            self.description.grid(row=i+2, column=4)
